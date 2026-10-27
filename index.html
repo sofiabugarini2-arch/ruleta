@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#111827">
+<title>La Ruleta de la Suerte | Bar & Co</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand-mark">✦</div>
+  <div><div class="eyebrow">BAR & CO PRESENTA</div><h1>La Ruleta de la Suerte</h1></div>
+  <button id="adminToggle" class="outline small">Modo encargado</button>
+</header>
+<main>
+  <section id="playView" class="view">
+    <div class="intro">
+      <span class="pill">PROMO DEL BAR</span>
+      <h2>¡Probá tu suerte!</h2>
+      <p>Comprá, participá y descubrí qué premio te toca.</p>
+    </div>
+    <div class="game-layout">
+      <div class="wheel-wrap">
+        <div class="pointer"></div>
+        <canvas id="wheel" width="620" height="620" aria-label="Ruleta de premios"></canvas>
+        <div class="wheel-center">GIRÁ<br><span>✦</span></div>
+      </div>
+      <div class="panel form-panel">
+        <h3>Antes de girar</h3>
+        <p class="muted">Demo de registro. Los datos quedan guardados solo en este dispositivo.</p>
+        <form id="playerForm">
+          <label>Nombre y apellido<input name="name" required maxlength="70" placeholder="Ej. Sofía Silva"></label>
+          <div class="two">
+            <label>Fecha de nacimiento<input name="birthday" type="date" required></label>
+            <label>Teléfono<input name="phone" type="tel" required maxlength="30" placeholder="11 1234 5678"></label>
+          </div>
+          <label>¿Sos socio/a?
+            <select name="member" required><option value="">Elegí una opción</option><option value="Sí">Sí</option><option value="No">No</option></select>
+          </label>
+          <button class="primary full" id="spinBtn" type="submit">Girar la ruleta</button>
+          <p class="tiny">Versión demostrativa. No valida compras ni entrega premios reales.</p>
+        </form>
+      </div>
+    </div>
+    <section id="resultPanel" class="panel result hidden" aria-live="polite">
+      <div class="win-icon">🎉</div><div class="eyebrow">¡FELICITACIONES!</div>
+      <h2 id="prizeTitle">Tu premio</h2><p id="prizeDescription"></p>
+      <div id="coupon" class="coupon">
+        <div class="coupon-head"><strong>LA RULETA DE LA SUERTE</strong><span>BAR & CO</span></div>
+        <div class="coupon-body"><div><div class="muted tiny">CÓDIGO DE CUPÓN</div><strong id="couponCode" class="coupon-code"></strong></div><div id="qr" class="qr"></div></div>
+        <div class="coupon-footer"><span>Válido hasta: <strong id="couponExpiry"></strong></span><span id="couponStatus" class="status issued">EMITIDO</span></div>
+      </div>
+      <div class="button-row"><button class="primary" id="printBtn">Imprimir / Guardar PDF</button><button class="outline" id="againBtn">Nueva participación</button></div>
+      <p class="tiny muted">El código QR identifica este cupón. El encargado puede validarlo desde “Modo encargado”.</p>
+    </section>
+  </section>
+
+  <section id="adminView" class="view hidden">
+    <div class="admin-heading"><div><span class="pill">PANEL INTERNO</span><h2>Control de premios</h2><p class="muted">Buscá el código manual o escaneá el QR con un lector compatible y pegá/ingresá el código.</p></div><button class="outline" id="backToPlay">Volver a la ruleta</button></div>
+    <div class="admin-grid">
+      <div class="panel">
+        <h3>Validar cupón</h3>
+        <form id="validateForm"><label>Código del cupón<input id="validateCode" required placeholder="Ej. RST-AB12-CD34"></label><button class="primary full">Consultar cupón</button></form>
+        <div id="validationResult" class="validation hidden"></div>
+        <button id="redeemBtn" class="success full hidden">Confirmar canje</button>
+      </div>
+      <div class="panel">
+        <h3>Configuración de demo</h3>
+        <label>Validez de los cupones nuevos<select id="expiryDays"><option value="1">1 día</option><option value="7" selected>7 días</option><option value="15">15 días</option><option value="30">30 días</option></select></label>
+        <p class="tiny muted">El cambio solo afecta cupones emitidos a partir de ahora; no modifica vencimientos existentes.</p>
+        <button id="saveSettings" class="outline full">Guardar configuración</button>
+        <hr>
+        <h3>Premios de la ruleta</h3>
+        <p class="tiny muted">En esta demo se usan los premios de ejemplo. La edición avanzada del catálogo queda para la siguiente etapa.</p>
+      </div>
+    </div>
+    <div class="panel table-panel"><div class="table-title"><h3>Cupones emitidos</h3><button id="exportBtn" class="outline small">Exportar CSV</button></div>
+      <div class="table-scroll"><table><thead><tr><th>Código</th><th>Premio</th><th>Cliente</th><th>Vence</th><th>Estado</th></tr></thead><tbody id="couponRows"></tbody></table></div>
+      <p id="emptyCoupons" class="muted">Todavía no se emitieron cupones.</p>
+    </div>
+    <p class="warning-note">⚠️ Esta demo guarda datos en el navegador de este dispositivo. No usar para canjes reales ni en varios dispositivos: todavía no tiene base de datos central ni inicio de sesión seguro.</p>
+  </section>
+</main>
+<footer>DEMO DE PROTOTIPO · La Ruleta de la Suerte Bar & Co</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="app.js"></script>
+</body></html>
