@@ -1,16 +1,17 @@
-name: Compilar APK Android
+
+name: Compilador APK Android
 
 on:
   workflow_dispatch:
   push:
-    branches: [main]
 
 permissions:
   contents: read
 
 jobs:
-  build-apk:
+  compilar-apk:
     runs-on: ubuntu-latest
+
     steps:
       - name: Descargar el proyecto
         uses: actions/checkout@v4
@@ -21,27 +22,32 @@ jobs:
           node-version: 22
 
       - name: Preparar Java
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '21'
 
       - name: Preparar Android SDK
-        uses: android-actions/setup-android@v3
+        run: |
+          echo "$ANDROID_HOME/cmdline-tools/latest/bin" >> "$GITHUB_PATH"
+          yes | sdkmanager --licenses || true
+          sdkmanager "platform-tools" "platforms;android-35" "build-tools;35.0.0"
 
-      - name: Instalar plataforma Android requerida
-        run: sdkmanager "platform-tools" "platforms;android-36" "build-tools;36.0.0"
-
-      - name: Instalar herramientas del proyecto
+      - name: Instalar dependencias
         run: npm install
+
+      - name: Preparar archivos web
+        run: |
+          mkdir -p www
+          cp index.html app.js styles.css www/
 
       - name: Crear plataforma Android
         run: npx cap add android
 
-      - name: Sincronizar la aplicación
+      - name: Sincronizar aplicación
         run: npx cap sync android
 
-      - name: Compilar APK de prueba
+      - name: Compilar APK
         run: |
           cd android
           chmod +x gradlew
