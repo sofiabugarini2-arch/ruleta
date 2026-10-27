@@ -1,0 +1,10 @@
+LA RULETA DE LA SUERTE BAR & CO
+
+Este ZIP prepara el proyecto para generar una app Android (APK).
+No incluye todavía el APK compilado.
+
+PARA LA OPCIÓN MÁS LIVIANA EN TU PC:
+1. Leé README.md.
+2. La guía recomienda compilar en la nube con GitHub Actions para no instalar Android Studio en una PC de 4 GB de RAM.
+
+No usar esta demo para canjes reales: todavía no cuenta con una base de datos segura compartida.
